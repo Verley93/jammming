@@ -8,15 +8,20 @@ const track = {
 };
 
 class Track extends Component {
+    renderAction() {
+        if (this.props.isRemoval) {
+            return (<a className="Track-action" onClick={this.removeTrack}>-</a>)
+        }
+        return (<a className="Track-action" onClick={this.addTrack}>+</a>)
+    }
+
     render() {
         return (<div className="Track">
             <div className="Track-information">
                 <h3>{track.name}</h3>
                 <p>{`${track.artist} | ${track.album}`}</p>
             </div>
-            <a className="Track-action">
-                +{/* + or - will go here */}
-            </a>
+            {this.renderAction()}
         </div>);
     }
 }
