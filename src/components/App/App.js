@@ -10,7 +10,9 @@ class App extends Component {
         super(props);
 
         this.state = {
-            searchResults: [] // name, artist, album, id
+            searchResults: [], // array of objects, each containing name, artist, album, id
+            playlistName: 'New Playlist',
+            playlistTracks: [] // array of objects, each containing name, artist, album, id
         }
     }
 
@@ -21,7 +23,9 @@ class App extends Component {
                 <SearchBar/>
                 <div className="App-playlist">
                     <SearchResults searchResults={this.state.searchResults}/>
-                    <Playlist/>
+                    <Playlist
+                        playlistName={this.state.playlistName}
+                        playlistTracks={this.state.playlistTracks}/>
                     <Track/>
                 </div>
             </div>
