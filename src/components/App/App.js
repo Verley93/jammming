@@ -13,7 +13,38 @@ class App extends Component {
             searchResults: [], // array of objects, each containing name, artist, album, id
             playlistName: 'New Playlist',
             playlistTracks: [] // array of objects, each containing name, artist, album, id
+        };
+
+        this.addTrack = this.addTrack.bind(this);
+        this.removeTrack = this.removeTrack.bind(this);
+    }
+
+    addTrack(track) {
+        let pTracks = this.state.playlistTracks;
+
+        // Check if track exists in Playlist
+        if (pTracks.find(savedTrack => {
+            savedTrack.id === track.id;
+        })) {
+            return;
         }
+
+        pTracks.push(track);
+        this.setState({playlistTracks: pTracks});
+    }
+
+    removeTrack(track) {
+        let pTracks = this.state.playlistTracks;
+
+        // Check if track exists in Playlist
+        if (pTracks.find(savedTrack => {
+            savedTrack.id === track.id;
+        })) {
+            return;
+        }
+
+        pTracks.filter(currentTrack => currentTrack.id !== track.id);
+        this.setState({playlistTracks: pTracks});
     }
 
     render() {
@@ -22,7 +53,10 @@ class App extends Component {
             <div className="App">
                 <SearchBar/>
                 <div className="App-playlist">
-                    <SearchResults searchResults={this.state.searchResults}/>
+                    <SearchResults
+                        searchResults={this.state.searchResults}
+                        onAdd={this.addTrack}
+                        onRemove={this.removeTrack}/>
                     <Playlist
                         playlistName={this.state.playlistName}
                         playlistTracks={this.state.playlistTracks}/>
