@@ -17,6 +17,8 @@ class App extends Component {
 
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
+        this.updatePlaylistName = this.updatePlaylistName.bind(this);
+        this.savePlaylist = this.savePlaylist.bind(this);
     }
 
     addTrack(track) {
@@ -47,6 +49,16 @@ class App extends Component {
         this.setState({playlistTracks: pTracks});
     }
 
+    updatePlaylistName(name) {
+        this.setState({playlistName: name});
+    }
+
+    savePlaylist() {
+        const trackURIs = this.state.playlistTracks.map(track => track.uri);
+        /*{ Pass trackURIls array and playlistName to method that will save
+        the user's playlist to their account }*/
+    }
+
     render() {
         return (<div>
             <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -59,7 +71,9 @@ class App extends Component {
                         onRemove={this.removeTrack}/>
                     <Playlist
                         playlistName={this.state.playlistName}
-                        playlistTracks={this.state.playlistTracks}/>
+                        playlistTracks={this.state.playlistTracks}
+                        onNameChange={this.updatePlaylistName}
+                        onSave={this.savePlaylist}/>
                     <Track/>
                 </div>
             </div>
