@@ -15,11 +15,11 @@ class Track extends Component {
         this.removeTrack = this.removeTrack.bind(this);
     }
 
-    addTrack(e) {
+    addTrack(event) {
         this.props.onAdd(this.props.track);
     }
 
-    removeTrack(e) {
+    removeTrack(event) {
         this.props.onRemove(this.props.track);
     }
 
