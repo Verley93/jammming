@@ -3,6 +3,7 @@ import SearchBar from './../SearchBar/SearchBar';
 import SearchResults from './../SearchResults/SearchResults';
 import Playlist from './../Playlist/Playlist';
 import Track from './../Track/Track';
+import Spotify from './../../util/Spotify/Spotify';
 import './App.css';
 
 class App extends Component {
@@ -56,12 +57,15 @@ class App extends Component {
 
     savePlaylist() {
         const trackURIs = this.state.playlistTracks.map(track => track.uri);
-        /*{ Pass trackURIls array and playlistName to method that will save
+        /*{ Pass trackURIs array and playlistName to method that will save
         the user's playlist to their account }*/
     }
 
     search(term) {
-        console.log(term);
+        // Update the state of searchResults w/ the value resolved from Spotify.search()'s promise
+        Spotify.search(term).then(searchResults => {
+            this.setState({searchResults: searchResults});
+        });
     }
 
     render() {
