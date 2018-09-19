@@ -22,7 +22,38 @@ const Spotify = {
             window.setTimeout(() => accessToken = '', expiresIn * 1000);
             // Clear parameters from URL to prevent the app from grabbing accessToken after expiresIn
             window.history.pushState('Access Token', null, '/');
+            return accessToken;
+        } else {
+            // Redirect users to obtain authorization (Implicit Grant)
+            const authURL = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+            window.location = authURL;
         }
+    },
+
+    search(term) {
+        // https://developer.spotify.com/documentation/web-api/reference/object-model/
+        const accessToken = Spotify.getAccessToken();
+        const urlToFetch = `https://api.spotify.com/v1/search?type=track&q=${term}`;
+        const init = {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        };
+
+        return fetch(urlToFetch, init).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            if (!jsonResponse.tracks) {
+                return [];
+            }
+            return jsonResponse.tracks.items.map(track => ({
+                id: track.id,
+                name: track.name,
+                artist: track.artists[0].name,
+                album: track.album.name,
+                URI: track.uri
+            }));
+        });
     }
 }
 
