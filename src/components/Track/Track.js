@@ -1,33 +1,28 @@
 import React, {Component} from 'react';
 import './Track.css';
 
-const track = {
-    name: 'Tiny Dancer',
-    artist: 'Elton John',
-    album: 'Madman Across The Water'
-};
-
 class Track extends Component {
     constructor(props) {
         super(props);
 
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
+        this.renderAction = this.renderAction.bind(this);
     }
 
-    addTrack(event) {
+    addTrack() {
         this.props.onAdd(this.props.track);
     }
 
-    removeTrack(event) {
+    removeTrack() {
         this.props.onRemove(this.props.track);
     }
 
     renderAction() {
         if (this.props.isRemoval) {
-            return (<a className="Track-action" onClick={this.removeTrack}>-</a>)
+            return <a className="Track-action" onClick={this.removeTrack}>-</a>
         }
-        return (<a className="Track-action" onClick={this.addTrack}>+</a>)
+        return <a className="Track-action" onClick={this.addTrack}>+</a>
     }
 
     render() {
@@ -39,6 +34,6 @@ class Track extends Component {
             {this.renderAction()}
         </div>);
     }
-}
+};
 
 export default Track;
