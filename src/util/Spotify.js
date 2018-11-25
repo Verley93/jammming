@@ -1,5 +1,5 @@
 const clientID = '18995439d9bf4ce2be435d8b4989b1b1';
-const redirectURI = 'http://jammming-dverley.surge.sh/';
+const redirectURI = 'http://localhost:3000/' //'http://jammming-dverley.surge.sh/';
 
 let accessToken;
 
@@ -69,13 +69,12 @@ const Spotify = {
                 Authorization: `Bearer ${accessToken}`
             }
         };
-        let userID;
 
         // GET current user's ID
         return fetch(`${endpoint}/me`, init).then(response => {
             return response.json();
         }).then(jsonResponse => {
-            userID = jsonResponse.id;
+            const userID = jsonResponse.id;
 
             // POST new playlist w/ input name to user's account, receive playlist ID
             return fetch(`${endpoint}/users/${userID}/playlists`, {
@@ -83,7 +82,7 @@ const Spotify = {
                 method: 'POST',
                 body: JSON.stringify({name: name})
             }).then(response => {
-                response.json();
+                return response.json();
             }).then(jsonResponse => {
                 const playlistID = jsonResponse.id;
 
